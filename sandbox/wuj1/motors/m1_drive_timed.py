@@ -8,10 +8,10 @@ to collect data, then make an equation to figure out the time needed given the d
 
 Note: If future modules you will learn different (BETTER) ways to drive a given distance.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Jingwen Wu.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Get a yardstick or tape measure to do some testing with /examples/motors/drive_input_speed.py
+# Done: 2. Get a yardstick or tape measure to do some testing with /examples/motors/drive_input_speed.py
 #   Have your whole team work this activity together.
 #   For your first test run drive_input_speed (via python drive_input_speed from that folder using SSH).
 #   Enter these values for your first test and record the distance below as XXX for 100.
@@ -29,18 +29,18 @@ Authors: David Fisher and PUT_YOUR_NAME_HERE.
 #
 #  Record your calculated speed conversions here:
 #   Tests @ 10 seconds:
-#     100 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     200 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     300 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     400 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
+#     100 degrees / second  -->  traveled 13 inches  -->  1.3 inches / second
+#     200 degrees / second  -->  traveled 24.5inches  -->  2.45 inches / second
+#     300 degrees / second  -->  traveled 35 inches  -->  3.5 inches / second
+#     400 degrees / second  -->  traveled 45 inches  -->  4.5 inches / second
 #   Tests @ 5 seconds:
-#     500 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     600 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     700 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     800 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     900 degrees / second  -->  traveled XXX inches  -->  YYY inches / second (probably no faster than 800)
+#     500 degrees / second  -->  traveled 28.5 inches  --> 5.7 inches / second
+#     600 degrees / second  -->  traveled 34.5 inches  -->  6.9 inches / second
+#     700 degrees / second  -->  traveled 39 inches  -->  7.8inches / second
+#     800 degrees / second  -->  traveled 46 inches  -->  9.2 inches / second
+#     900 degrees / second  -->  traveled 49 inches  -->  9.8 inches / second (probably no faster than 800)
 #
-# TODO: 3. Make an equation
+# Done: 3. Make an equation
 #   Derive from that information a way to convert a given degrees per second speed into an inches / second speed.
 #     If you plotted the data with degrees / second on the x axis and inches per second on the y axis you would find the
 #       data is fairly linear, so you could use a    y = m * x + b   line approximation formula.  Excel could even help
