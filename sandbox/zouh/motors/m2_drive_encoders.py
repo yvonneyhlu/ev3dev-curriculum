@@ -13,6 +13,43 @@ Authors: David Fisher and PUT_YOUR_NAME_HERE.
 # TODO: 3. Add a beep after the drive motors stop (see code below).  Test your code to hear the beep AFTER movement.
 #   ev3.Sound.beep().wait()
 
+import ev3dev.ev3 as ev3
+import time
+
+def main():
+    print("--------------------------------------------")
+    print("  Timed Driving")
+    print("--------------------------------------------")
+    ev3.Sound.speak("Timed Driving").wait()
+
+    # Connect two large motors on output ports B and C
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+    # Check that the motors are actually connected
+    assert left_motor.connected
+    assert right_motor.connected
+
+    time_s = 1  # Any value other than 0.
+    while time_s != 0:
+        left_sp = int(input("Enter a speed (0 to 900 dps): "))
+        distance = int(input("Distance to travel (inches): "))
+        left_position_sp = 90 * distance
+        print("it works")
+        left_motor.run_to_rel_pos(position_sp=left_position_sp,
+                                  speed_sp=left_sp)
+        right_motor.run_to_rel_pos(position_sp=left_position_sp,
+                                  speed_sp=left_sp)
+        time.sleep(distance / (0.01 * left_sp + 0.24))
+        print("it works")
+        left_motor.stop()
+        right_motor.stop(stop_action="brake")
+        ev3.Sound.beep().wait()
+
+    print("Goodbye!")
+    ev3.Sound.speak("Goodbye").wait()
+
+main()
 # TODO: 4. Instead of using the run_forever, time.sleep, stop pattern switch to using the run_to_rel_pos command.
 #   You will need to determine the position_sp value to pass into the run_to_rel_pos command as a named argument.
 #   Assume the diameter of the wheel is 1.3" (close enough).  A 1.3" diameter wheel results in approximately a 4"
