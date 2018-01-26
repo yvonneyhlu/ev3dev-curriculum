@@ -14,6 +14,8 @@
 import ev3dev.ev3 as ev3
 import math
 import time
+left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
 
 class Snatch3r(object):
@@ -22,12 +24,9 @@ class Snatch3r(object):
     # TODO: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
     def __init__(self):
-        self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
-        self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
-        assert self.left_motor.connected
-        assert self.right_motor.connected
+        self.x = 0
 
-    def drive_inches(self, inches_target, speed_deg_per_second):
-        self.left_motor.run_forever(speed_sp=speed_deg_per_second)
-        self.left_motor.stop(position_sp=inches_target*0.01)
-        ev3.Sound.beep().wait()
+    def drive_inches(self, length, speed_deg_per_second):
+        left_motor.run_forever(speed_sp=speed_deg_per_second)
+        right_motor.run_forever(speed_sp=speed_deg_per_second)
+        t = length/
