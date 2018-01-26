@@ -29,7 +29,7 @@ class Snatch3r(object):
     def drive_inches(self, length, speed_deg_per_second):
         left_motor.run_forever(speed_sp=speed_deg_per_second)
         right_motor.run_forever(speed_sp=speed_deg_per_second)
-        t = length/ (1.3 * math.pi*speed_deg_per_second/360)
+        t = length/ (1.30 * math.pi*speed_deg_per_second/360)
         time.sleep(t)
         left_motor.stop()
         right_motor.stop(stop_action="brake")
