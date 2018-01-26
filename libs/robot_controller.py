@@ -12,6 +12,7 @@
 """
 
 import ev3dev.ev3 as ev3
+
 import math
 import time
 left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
@@ -21,7 +22,7 @@ right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
     
-    # TODO: Implement the Snatch3r class as needed when working the sandox exercises
+    # Done: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)cd
     def __init__(self):
         self.x = 0
@@ -33,3 +34,11 @@ class Snatch3r(object):
         time.sleep(t)
         left_motor.stop()
         right_motor.stop(stop_action="brake")
+
+    def turn_degrees(self, degrees_to_turn, turn_speed_sp):
+
+        left_motor.run_to_rel_pos(position_sp= - degrees_to_turn * 450 / 90 , speed_sp=turn_speed_sp, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        right_motor.run_to_rel_pos(position_sp= degrees_to_turn * 450 / 90, speed_sp=turn_speed_sp, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
