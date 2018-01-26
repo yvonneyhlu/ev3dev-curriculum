@@ -22,14 +22,14 @@ class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
     
     # TODO: Implement the Snatch3r class as needed when working the sandox exercises
-    # (and delete these comments)
+    # (and delete these comments)cd
     def __init__(self):
         self.x = 0
 
     def drive_inches(self, length, speed_deg_per_second):
         left_motor.run_forever(speed_sp=speed_deg_per_second)
         right_motor.run_forever(speed_sp=speed_deg_per_second)
-        t = length/ (0.01 * speed_deg_per_second + 0.24)
+        t = length/ (1.3 * math.pi*speed_deg_per_second/360)
         time.sleep(t)
         left_motor.stop()
         right_motor.stop(stop_action="brake")
