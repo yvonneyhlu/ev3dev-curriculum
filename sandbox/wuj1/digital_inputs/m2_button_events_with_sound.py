@@ -113,7 +113,7 @@ def handle_left_button(button_state):
         print("Left button was released")
 
 
-def hand_right_button(button_state):
+def handle_right_button(button_state):
     if button_state:
         print("Right button is pressed")
         play_wav_file()
