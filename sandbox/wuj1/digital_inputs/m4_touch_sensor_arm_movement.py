@@ -32,15 +32,15 @@ def main():
         if command_to_run == 'c':
             print("Calibrate the arm")
             print("TODO: 3 is to delete this print statement, uncomment the line below, and implement that function.")
-            # arm_calibration(arm_motor, touch_sensor)
+            arm_calibration(arm_motor, touch_sensor)
         elif command_to_run == 'u':
             print("Move the arm to the up position")
             print("TODO: 4 is to delete this print statement, uncomment the line below, and implement that function.")
-            # arm_up(arm_motor, touch_sensor)
+            arm_up(arm_motor, touch_sensor)
         elif command_to_run == 'd':
             print("Move the arm to the down position")
             print("TODO: 5 is to delete this print statement, uncomment the line below, and implement that function.")
-            # arm_down(arm_motor)
+            arm_down(arm_motor)
         elif command_to_run == 'q':
             break
         else:
@@ -121,13 +121,13 @@ def arm_down(arm_motor):
     # Move the arm to the absolute position_sp of 0 at max speed.
     # Wait until the move completes
     # Make a beep sound
-    arm_motor.run_to_abs_pos(position_sp = 0, speed_up = MAX_SPEED)
-    arm_motor.wait_while(ev3.Motor.STOP_ACTION_BRAKE)
+    arm_motor.run_to_abs_pos(position_sp = 0, speed_sp = MAX_SPEED)
+    arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
     ev3.Sound.beep().wait()
 
     # Code that attempts to do this task but has bugs.  Fix them.
-    arm_motor.run_to_abs_pos()
-    arm_motor.wait_while(ev3.Motor.STATE_HOLDING)  # Blocks until the motor finishes running
+    # arm_motor.run_to_abs_pos()
+    # arm_motor.wait_while(ev3.Motor.STATE_HOLDING)  # Blocks until the motor finishes running
 
     # TODO: 6. After you fix the bugs in the three arm movement commands demo your code to a TA or instructor.
     #
