@@ -102,7 +102,7 @@ def arm_up(arm_motor, touch_sensor):
     # Once past the loop the touch sensor must be pressed. Stop the arm motor using the brake stop action.
     # Make a beep sound
 
-    # Code that attempts to do this task but has many bugs.  Fix them!
+
     arm_motor.run_forever(speed_sp=MAX_SPEED)
     while not touch_sensor.is_pressed:
         time.sleep(0.01)
