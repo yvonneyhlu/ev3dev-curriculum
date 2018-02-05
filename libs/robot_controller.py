@@ -21,16 +21,20 @@ MAX_SPEED = 900
 
 
 class Snatch3r(object):
-   
+
 
     def __init__(self):
+
         self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
-        self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         self.touch_sensor = ev3.TouchSensor()
 
-        assert self.arm_motor.connected
+        self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+
+        assert self.arm_motor
         assert self.touch_sensor
+        assert self.left_motor
+        assert self.right_motor
 
     def drive_inches(self, length, speed_deg_per_second):
         self.left_motor.run_to_rel_pos(position_sp = length * 90, speed_sp = speed_deg_per_second, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
@@ -73,3 +77,11 @@ class Snatch3r(object):
         self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=MAX_SPEED)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
+
+    def shutdown(self):
+        self.left_motor.stop()
+        self.right_motor.stop()
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        print("Goodbye!")
+        ev3.Sound.speak("Goodbye").wait()
