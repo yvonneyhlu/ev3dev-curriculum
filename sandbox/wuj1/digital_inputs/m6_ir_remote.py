@@ -88,7 +88,7 @@ def main():
 
         # Done: 5. Process the RemoteControl objects.
         btn.process()
-        time.sleep(0.01)
+        time.sleep(0.02)
 
     # Done: 2. Have everyone talk about this problem together then pick one  member to modify libs/robot_controller.py
     # as necessary to implement the method below as per the instructions in the opening doc string. Once the code has
