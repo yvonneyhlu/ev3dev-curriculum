@@ -75,7 +75,7 @@ def main():
     quit_button["command"] = lambda: quit_program(mqtt_client)
 
     # Create an MQTT connection
-    # TODO: 5. Delete the line below (mqtt_client = None) then uncomment the code below.  It creates a real mqtt client.
+    # Done: 5. Delete the line below (mqtt_client = None) then uncomment the code below.  It creates a real mqtt client.
 
     my_delegate = MyDelegate(canvas)
     mqtt_client = com.MqttClient(my_delegate)
