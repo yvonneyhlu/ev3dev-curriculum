@@ -121,27 +121,27 @@ def main():
 
 def forward(mqtt_client, left_speed, right_speed):
     print("move forward")
-    mqtt_client.send_message()
+    mqtt_client.send_message("forward", [left_speed, right_speed])
 
 
 def left(mqtt_client, left_speed, right_speed):
     print("move left")
-    mqtt_client.send_message()
+    mqtt_client.send_message("left",[left_speed, right_speed])
 
 
 def right(mqtt_client, left_speed, right_speed):
     print("move right")
-    mqtt_client.send_message()
+    mqtt_client.send_message("right", [left_speed, right_speed])
 
 
 def back(mqtt_client, left_speed, right_speed):
     print("go back")
-    mqtt_client.send_message()
+    mqtt_client.send_message("back", [left_speed, right_speed])
 
 
 def stop(mqtt_client):
     print("stop moving")
-    mqtt_client.send_message()
+    mqtt_client.send_message("stop")
 
 
 # TODO: 5. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.  This is the final one!
