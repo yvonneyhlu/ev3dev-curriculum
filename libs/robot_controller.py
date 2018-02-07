@@ -13,15 +13,12 @@
 
 import ev3dev.ev3 as ev3
 
-import math
 import time
 
 MAX_SPEED = 900
 
 
-
 class Snatch3r(object):
-
 
     def __init__(self):
 
@@ -30,13 +27,18 @@ class Snatch3r(object):
         self.touch_sensor = ev3.TouchSensor()
 
         self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        self.color_sensor = ev3.ColorSensor()
+        self.ir_sensor = ev3.InfraredSensor()
 
+        assert self.ir_sensor
         assert self.arm_motor
         assert self.touch_sensor
         assert self.left_motor
         assert self.right_motor
+        assert self.color_sensor
 
     def drive_inches(self, length, speed_deg_per_second):
+        """this method is used to drive the robot by setting inches it need to drive"""
         self.left_motor.run_to_rel_pos(position_sp = length * 90, speed_sp = speed_deg_per_second, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.right_motor.run_to_rel_pos(position_sp= length * 90, speed_sp=speed_deg_per_second,stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
@@ -44,14 +46,15 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def turn_degrees(self, degrees_to_turn, turn_speed_sp):
-
-        self.left_motor.run_to_rel_pos(position_sp= - degrees_to_turn * 450 / 90 , speed_sp=turn_speed_sp, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-        self.right_motor.run_to_rel_pos(position_sp= degrees_to_turn * 450 / 90, speed_sp=turn_speed_sp, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        """this method is uesd to turn the robot by degrees"""
+        self.left_motor.run_to_rel_pos(position_sp=-degrees_to_turn * 450 / 90 , speed_sp=turn_speed_sp, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.right_motor.run_to_rel_pos(position_sp=degrees_to_turn * 450 / 90, speed_sp=turn_speed_sp, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def arm_calibration(self):
+        """this method is uesd to calibrate the arm of robot"""
         self.arm_motor.run_forever(speed_sp=MAX_SPEED)
         while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
@@ -59,14 +62,14 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
         arm_revolutions_for_full_range = 14.2 * 360
-        self.arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range, speed_sp=MAX_SPEED,
-                                 stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range, speed_sp=MAX_SPEED, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
         self.arm_motor.position = 0
 
     def arm_up(self):
+        """this method is used to move the arm up"""
         self.arm_motor.run_forever(speed_sp=MAX_SPEED)
         while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
@@ -74,11 +77,13 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def arm_down(self):
+        """this method is used to move the arm down"""
         self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=MAX_SPEED)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def shutdown(self):
+        """this method is used to shut down the robot"""
         self.left_motor.stop()
         self.right_motor.stop()
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
@@ -87,31 +92,37 @@ class Snatch3r(object):
         ev3.Sound.speak("Goodbye").wait()
 
     def forward(self, left_speed, right_speed):
+        """this method is used to drive the robot forward"""
         print('go forward')
-        self.right_motor.run_forever(speed_sp = right_speed)
-        self.left_motor.run_forever(speed_sp = left_speed)
+        self.right_motor.run_forever(speed_sp=right_speed)
+        self.left_motor.run_forever(speed_sp=left_speed)
 
     def left(self, left_speed, right_speed):
+        """this method is used to turn robot to the left"""
         print('go left')
-        self.right_motor.run_forever(speed_sp = right_speed)
-        self.left_motor.run_forever(speed_sp = -left_speed)
+        self.right_motor.run_forever(speed_sp=right_speed)
+        self.left_motor.run_forever(speed_sp=-left_speed)
 
     def right(self, left_speed, right_speed):
+        """this method is used to turn robot to the right"""
         print('go right')
-        self.right_motor.run_forever(speed_sp = -right_speed)
-        self.left_motor.run_forever(speed_sp = left_speed)
+        self.right_motor.run_forever(speed_sp=-right_speed)
+        self.left_motor.run_forever(speed_sp=left_speed)
 
     def back(self, left_speed, right_speed):
+        """this method is used to drive the robot backward"""
         print('go back')
-        self.right_motor.run_forever(speed_sp = -right_speed)
-        self.left_motor.run_forever(speed_sp = -left_speed)
+        self.right_motor.run_forever(speed_sp=-right_speed)
+        self.left_motor.run_forever(speed_sp=-left_speed)
 
     def stop(self):
+        """this method is used to stop robot from moving"""
         print('goodbye')
         self.left_motor.stop()
         self.right_motor.stop()
 
     def loop_forever(self):
+        """this method is used to avoid letting the robot finish until the 'end' command"""
         self.running = True
         while self.running:
             time.sleep(0.1)

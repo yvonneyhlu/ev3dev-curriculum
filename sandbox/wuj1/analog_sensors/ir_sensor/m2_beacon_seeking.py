@@ -9,8 +9,8 @@ function gets the robot to that location it will stop the robot and return.  Wit
 prompted if they want to find the beacon again (presumably you move it first) or quit.
 
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Jingwen Wu.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 import traceback
 
 import ev3dev.ev3 as ev3
@@ -57,7 +57,7 @@ def seek_beacon(robot):
     """
 
     # TODO: 2. Create a BeaconSeeker object on channel 1.
-
+    robot.beacon_seeker = ev3.BeaconSeeker(channel=1)
     forward_speed = 300
     turn_speed = 100
 
