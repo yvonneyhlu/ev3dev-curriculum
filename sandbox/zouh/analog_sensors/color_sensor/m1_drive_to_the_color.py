@@ -59,10 +59,10 @@ def main():
     # For our standard shutdown button.
     btn = ev3.Button()
     # TODO: 2. Uncomment the lines below to setup event handlers for these buttons.
-    # btn.on_up = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_RED)
-    # btn.on_down = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_BLUE)
-    # btn.on_left = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_BLACK)
-    # btn.on_right = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_WHITE)
+    btn.on_up = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_RED)
+    btn.on_down = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_BLUE)
+    btn.on_left = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_BLACK)
+    btn.on_right = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_WHITE)
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
 
     while dc.running:
@@ -94,6 +94,16 @@ def drive_to_color(button_state, robot, color_to_seek):
         #   self.color_sensor = ev3.ColorSensor()
         #   assert self.color_sensor
         # Then here you can use a command like robot.color_sensor.color to check the value
+        for _ in range(3):
+            current_color = robot.color_sensor.color
+            if current_color == color_to_seek:
+                robot.left_motor.stop()
+                robot.right_motor.stop()
+            else:
+                robot.right_motor.run_forever(speed_sp = 600)
+                robot.left_motor.run_forever(speed_sp = 600)
+            time.sleep(1.0)
+
 
 
 
