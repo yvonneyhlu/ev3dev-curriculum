@@ -29,8 +29,8 @@ def main():
 
     # TODO: 4: After running the code set the default white and black levels to a better initial guess.
     #   Once you have the values hardcoded to resonable numbers here you don't really need the w and b commands below.
-    white_level = 95
-    black_level = 5
+    white_level = 97
+    black_level = 3
     robot = robo.Snatch3r()
 
     while True:
@@ -43,13 +43,13 @@ def main():
             #   self.color_sensor = ev3.ColorSensor()
             #   assert self.color_sensor
             # Then here you can use a command like robot.color_sensor.reflected_light_intensity
-            robot.color_sensor.reflected_light_intensity = white_level
+            white_level = robot.color_sensor.reflected_light_intensity
 
             print("New white level is {}.".format(white_level))
         elif command_to_run == 'b':
             print("Calibrate the black light level")
             # Done: 3. Read the reflected_light_intensity property of the color sensor and set black_level
-            robot.color_sensor.reflected_light_intensity = black_level
+            black_level = robot.color_sensor.reflected_light_intensity
 
             print("New black level is {}.".format(black_level))
         elif command_to_run == 'f':
@@ -79,19 +79,17 @@ def follow_the_line(robot, white_level, black_level):
     # Done: 5. Use the calibrated values for white and black to calculate a light threshold to determine if your robot
     # should drive straight or turn to the right.  You will need to test and refine your code until it works well.
     # Optional extra - For a harder challenge could you drive on the black line and handle left or right turns?
-
-    while robot.color_sensor.reflected_light_intensity > black_level & robot.color_sensor.reflected_light_intensity < (black_level + 10):
-        robot.left_motor.run_forever(speed_sp = 600)
-        robot.left_motor.run_forever(speed_sp = 0)
-
-    while robot.color_sensor.reflected_light_intensity < white_level & robot.color_sensor.reflected_light_intensity > (white_level - 10):
-        robot.left_motor.run_forever(speed_sp=600)
-        robot.right_motor.run_forever(speed_sp=600)
-
-
-
-    robot.stop()
-    ev3.Sound.speak("Done")
+    while not robot.touch_sensor.is_pressed:
+        while robot.color_sensor.reflected_light_intensity < black_level + 40:
+            robot.forward(500,500)
+            time.sleep(0.05)
+        robot.stop()
+        time.sleep(0.05)
+        while robot.color_sensor.reflected_light_intensity > white_level - 40:
+            robot.right(500,500)
+            time.sleep(0.05)
+        robot.stop()
+        ev3.Sound.speak("Done")
 
 
 # TODO: 6. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.

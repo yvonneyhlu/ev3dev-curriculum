@@ -52,6 +52,14 @@ def main():
     ev3.Sound.speak("Drive to the color").wait()
     print("Press Back to exit this program.")
 
+    ev3.ColorSensor.COLOR_BLACK = 1
+    ev3.ColorSensor.COLOR_BLUE = 2
+    ev3.ColorSensor.COLOR_GREEN = 3
+    ev3.ColorSensor.COLOR_YELLOW = 4
+    ev3.ColorSensor.COLOR_RED = 5
+    ev3.ColorSensor.COLOR_WHITE = 6
+    ev3.ColorSensor.COLOR_BROWN = 7
+
     robot = robo.Snatch3r()
     dc = DataContainer()
 
@@ -93,13 +101,15 @@ def drive_to_color(button_state, robot, color_to_seek):
         #   self.color_sensor = ev3.ColorSensor()
         #   assert self.color_sensor
         # Then here you can use a command like robot.color_sensor.color to check the value
-        robot.left_motor.run_forever(speed_sp = 600)
-        robot.right_motor.run_forever(speed_up = 600)
-    if robot.color_sensor.color == color_to_seek:
-        robot.left_motor.stop()
-        robot.right_motor.stop()
-
-
+        for _ in range(3):
+            current_color = robot.color_sensor.color
+            if current_color == color_to_seek:
+                robot.left_motor.stop()
+                robot.right_motor.stop()
+            else:
+                robot.right_motor.run_forever(speed_sp = 600)
+                robot.left_motor.run_forever(speed_sp = 600)
+            time.sleep(1.0)
 
         # TODO: 4. Call over a TA or instructor to sign your team's checkoff sheet.
         #
