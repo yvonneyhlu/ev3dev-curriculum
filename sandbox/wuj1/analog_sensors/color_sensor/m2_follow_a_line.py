@@ -83,12 +83,12 @@ def follow_the_line(robot, white_level, black_level):
         while robot.color_sensor.reflected_light_intensity < black_level + 40:
             robot.forward(500,500)
             time.sleep(0.05)
-        robot.stop()
+        robot.notforward()
         time.sleep(0.05)
         while robot.color_sensor.reflected_light_intensity > white_level - 40:
             robot.right(500,500)
             time.sleep(0.05)
-        robot.stop()
+        robot.notforward()
         ev3.Sound.speak("Done")
 
 

@@ -27,6 +27,7 @@ def main():
     print("Press the touch sensor to exit this program.")
 
     robot = robo.Snatch3r()
+
     robot.pixy.mode = "SIG1"
 
     while not robot.touch_sensor.is_pressed:

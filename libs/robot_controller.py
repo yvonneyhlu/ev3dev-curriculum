@@ -40,7 +40,8 @@ class Snatch3r(object):
         assert self.right_motor
         assert self.color_sensor
         assert self.beacon_seeker
-        assert self.pixy.connected
+        assert self.pixy
+        self.pixy.mode = "SIG1"
 
     def drive_inches(self, length, speed_deg_per_second):
         """this method is used to drive the robot by setting inches it need to drive"""
