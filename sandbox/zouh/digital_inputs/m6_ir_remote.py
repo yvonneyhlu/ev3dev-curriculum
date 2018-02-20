@@ -33,6 +33,10 @@ import time
 
 import robot_controller as robo
 
+left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+robot = robo.Snatch3r()
+
 # Note that todo2 is farther down in the code.  That method needs to be written before you do todo3.
 # TODO: 3. Have someone on your team run this program on the EV3 and make sure everyone understands the code.
 # Can you see what the robot does and explain what each line of code is doing? Talk as a group to make sure.
@@ -62,14 +66,34 @@ def main():
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
 
+    rc1 = ev3.RemoteControl(channel=1)
+    rc1.on_red_up = lambda state: handle_red_up_1(state)
+    rc1.on_red_down = lambda state: handle_red_down_1(state)
+    rc1.on_blue_up = lambda state: handle_blue_up_1(state, dc)
+    rc1.on_blue_down = lambda state: handle_blue_down_1(state, dc)
+
+    rc2 = ev3.RemoteControl(channel=2)
+    rc2.on_red_up = lambda state: handle_red_up_2(state, robot)
+
+    rc2 = ev3.RemoteControl(channel=2)
+    rc2.on_red_up = lambda state: handle_red_down_2(state, robot)
+
+    rc2 = ev3.RemoteControl(channel=2)
+    rc2.on_blue_up = lambda state: handle_blue_up_2(state, robot)
     # For our standard shutdown button.
     btn = ev3.Button()
-    btn.on_backspace = lambda state: handle_shutdown(state, dc)
+    btn.on_backspace = lambda state: handle_shutdown(state,dc)
 
     robot.arm_calibration()  # Start with an arm calibration in this program.
 
     while dc.running:
         # TODO: 5. Process the RemoteControl objects.
+        rc1.process()
+        time.sleep(0.05)
+
+        rc2.process()
+        time.sleep(0.05)
+
         btn.process()
         time.sleep(0.01)
 
@@ -80,12 +104,138 @@ def main():
     # Once the library is implemented any team member should be able to run his code as stated in todo3.
     robot.shutdown()
 
+
 # ----------------------------------------------------------------------
 # Event handlers
 # Some event handlers have been written for you (ones for the arm).
 # Movement event handlers have not been provided.
 # ----------------------------------------------------------------------
 # TODO: 6. Implement the IR handler callbacks handlers.
+def handle_red_up_1(button_state):
+    """
+    Handle IR event.
+
+    Type hints:
+      :type button_state: bool
+    """
+    print('work')
+
+
+    if(button_state):
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        left_motor.run_forever(speed_sp=600)
+        time.sleep(0.01)
+        print("test")
+    else:
+        
+        left_motor.stop(stop_action="brake")
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+        ev3.Sound.beep().wait()
+
+
+def handle_red_down_1(button_state):
+    """
+    Handle IR event.
+
+    Type hints:
+      :type button_state: bool
+      :type dc: DataContainer
+    """
+    while():
+        if button_state:
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+            left_motor.run_forever(speed_sp=-600)
+            while(button_state):
+                time.sleep(0.01)
+        else:
+            left_motor.stop(stop_action="brake")
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+            ev3.Sound.beep().wait()
+
+
+def handle_blue_up_1(button_state, dc):
+    """
+    Handle IR event.
+
+    Type hints:
+      :type button_state: bool
+      :type dc: DataContainer
+    """
+    while():
+        if button_state:
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+            right_motor.run_forever(speed_sp=600)
+            while button_state:
+                time.sleep(0.01)
+        else:
+            right_motor.stop(stop_action="brake")
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+            ev3.Sound.beep().wait()
+
+
+def handle_blue_down_1(button_state, dc):
+    """
+    Handle IR event.
+
+    Type hints:
+      :type button_state: bool
+      :type dc: DataContainer
+    """
+    # ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+    # right_motor.run_forever(speed_sp=-600)
+    # while button_state:
+    #     time.sleep(0.01)
+    # right_motor.stop(stop_action="brake")
+    # ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+    # ev3.Sound.beep().wait()
+
+    while():
+        if button_state:
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+            right_motor.run_forever(speed_sp=-600)
+            while button_state:
+                time.sleep(0.01)
+        else:
+            right_motor.stop(stop_action="brake")
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+            ev3.Sound.beep().wait()
+
+
+def handle_red_up_2(button_state, robot):
+    """
+    Handle IR event.
+
+    Type hints:
+      :type button_state: bool
+      :type dc: DataContainer
+    """
+    if button_state:
+        robot.arm_up()
+
+
+def handle_red_down_2(button_state, robot):
+    """
+    Handle IR event.
+
+    Type hints:
+      :type button_state: bool
+      :type dc: DataContainer
+    """
+    if button_state:
+        robot.arm_down()
+
+
+def handle_blue_up_2(button_state, robot):
+    """
+    Handle IR event.
+
+    Type hints:
+      :type button_state: bool
+      :type dc: DataContainer
+    """
+    if button_state:
+        robot.arm_calibration()
+
 
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #

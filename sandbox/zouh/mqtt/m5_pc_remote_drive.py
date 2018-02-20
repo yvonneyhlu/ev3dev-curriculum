@@ -34,7 +34,8 @@ import mqtt_remote_method_calls as com
 def main():
     # TODO: 2. Setup an mqtt_client.  Notice that since you don't need to receive any messages you do NOT need to have
     # a MyDelegate class.  Simply construct the MqttClient with no parameter in the constructor (easy).
-    mqtt_client = None  # Delete this line, it was added temporarily so that the code we gave you had no errors.
+    # mqtt_client = None  # Delete this line, it was added temporarily so that the code we gave you had no errors.
+    mqtt_client = com.MqttClient()
 
     root = tkinter.Tk()
     root.title("MQTT Remote")
@@ -63,12 +64,14 @@ def main():
     forward_button = ttk.Button(main_frame, text="Forward")
     forward_button.grid(row=2, column=1)
     # forward_button and '<Up>' key is done for your here...
-    # forward_button['command'] = lambda: some_callback1(mqtt_client, left_speed_entry, right_speed_entry)
-    # root.bind('<Up>', lambda event: some_callback1(mqtt_client, left_speed_entry, right_speed_entry))
+    forward_button['command'] = lambda: some_callback1(mqtt_client, left_speed_entry, right_speed_entry)
+    root.bind('<Up>', lambda event: some_callback1(mqtt_client, left_speed_entry, right_speed_entry))
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
     # left_button and '<Left>' key
+    # left_button['command'] = lambda: some_callback2(mqtt_client, left_speed_entry, right_speed_entry)
+    # root.bind('<Left>', lambda event: some_callback2(mqtt_client, left_speed_entry, right_speed_entry))
 
     stop_button = ttk.Button(main_frame, text="Stop")
     stop_button.grid(row=3, column=1)
@@ -108,6 +111,12 @@ def main():
 # Tkinter callbacks
 # ----------------------------------------------------------------------
 # TODO: 4. Implement the functions for the drive button callbacks.
+
+def some_callback1(mqtt_client, left_speed_entry, right_speed_entry):
+    mqtt_client.send_message('drive_forward', [left_speed_entry,right_speed_entry])
+
+# def some_callback2(mqtt_client, right_speed_entry)
+
 
 # TODO: 5. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.  This is the final one!
 #
